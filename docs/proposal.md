@@ -1,14 +1,15 @@
 # Final project proposal
-This file is the template for your final project proposal. Please update this file with your proposal details (delete these first two sentences, please :slightly_smiling_face:)
+
 
 ## Hardware/software proposal 1 
-Use an led array to show the position of a potentiometer. The registers can define sensitivity(How many steps in a turn).
+Use an led array to show the position of a potentiometer. Software will control a register that defines the sensitivity(How many steps in a turn).
 
 ## Hardware/software proposal 2
-Use push button to 
+We will use a pair of push buttons to shift an led pattern around an array of leds, software will control the pattern that the leds hold to be shifted via one register on the hps lightweight bus.
 
 ## Extra credit
-IMU
+Something with the IMU
 
 ## Division of labor
-Briefly describe who will be working on what. For extra credit tasks and any software above the driver level, it is okay for both group members to work on a single piece, so long as the division of labor and responsibilities are clear.
+Zach will be designing the VHDL for the led array changing with the potentiometer and coding the supporting software for the led array controlled by push buttons and a register that holds the pattern.
+Ian will be designing the VHDL for the led array that changes with the push buttons and coding the supporting software for the led array that changes with the potentiometer.
