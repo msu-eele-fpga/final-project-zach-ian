@@ -251,7 +251,10 @@ architecture de10nano_arch of de10nano_top is
       adc_sclk                        : out   std_logic;
       adc_cs_n                        : out   std_logic;
       adc_dout                        : in    std_logic;
-      adc_din                         : out   std_logic
+      adc_din                         : out   std_logic;
+      pwm_avalon_blue_pwm_signal      : out   std_logic;                                        -- blue_pwm_signal
+      pwm_avalon_green_pwm_signal     : out   std_logic;                                        -- green_pwm_signal
+      pwm_avalon_red_pwm_signal       : out   std_logic
     );
   end component soc_system;
 
@@ -351,7 +354,12 @@ begin
 
       -- Fabric clock and reset
       clk_clk       => fpga_clk1_50,
-      reset_reset_n => rst_n
+      reset_reset_n => rst_n,
+      
+      -- PWM LED control
+      pwm_avalon_blue_pwm_signal => gpio_0(0),
+      pwm_avalon_green_pwm_signal => gpio_0(1),
+      pwm_avalon_red_pwm_signal => gpio_0(2)
     );
 
 end architecture de10nano_arch;
