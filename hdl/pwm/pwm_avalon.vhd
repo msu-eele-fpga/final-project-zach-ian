@@ -26,7 +26,7 @@ architecture RGB_LED_avalon_arch of RGB_LED_avalon is
 	signal duty_cycle_r 	: std_logic_vector(11 downto 0) := "010000000000";
 	signal duty_cycle_g 	: std_logic_vector(11 downto 0) := "010000000000";
 	signal duty_cycle_b 	: std_logic_vector(11 downto 0) := "010000000000";
-	signal pwm_period	: unsigned(19 downto 0) := "10000000000000000000";
+	signal pwm_period	: unsigned(19 downto 0) := "00000000000010000000";
 	
 	
 	component pwm_controller is
@@ -60,7 +60,7 @@ architecture RGB_LED_avalon_arch of RGB_LED_avalon is
 				duty_cycle_r	<= "010000000000";
 				duty_cycle_g	<= "010000000000";
 				duty_cycle_b	<= "010000000000";
-				pwm_period 	<= "10000000000000000000";
+				pwm_period 	<= "00000000000010000000";
 			elsif (rising_edge(clk) and avs_write = '1') then
 				case avs_address is
 					when "00"	=> duty_cycle_r <= avs_writedata(11 downto 0);
