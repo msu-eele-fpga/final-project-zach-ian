@@ -9,4 +9,12 @@
 		compatible = "Ian,rgbled";
 		reg = <0xff200020 32>;
 	};
+	shifter: shifter@ff200030 {
+		compatible = "Ian,shifter";
+		reg = <0xff200030 16>;
+	};
+	potent_array: potent_array@ff200040 {
+		compatible = "Zach,potent_array";
+		reg = <0xff200040 16>;
+	};
 };
