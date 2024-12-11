@@ -9,12 +9,36 @@
    categories="System" />
  <parameter name="bonusData"><![CDATA[bonusData 
 {
+   element PWM_avalon_interface_0
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element PWM_avalon_interface_0.avalon_slave_0_1
+   {
+      datum baseAddress
+      {
+         value = "32";
+         type = "String";
+      }
+   }
    element adc
    {
       datum _sortIndex
       {
          value = "4";
          type = "int";
+      }
+   }
+   element adc.adc_slave
+   {
+      datum baseAddress
+      {
+         value = "0";
+         type = "String";
       }
    }
    element adc_pll
@@ -334,6 +358,22 @@
          type = "String";
       }
    }
+   element soc_system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone V";
+         type = "String";
+      }
+   }
+   element soc_system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone V";
+         type = "String";
+      }
+   }
 }
 ]]></parameter>
  <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
@@ -364,7 +404,17 @@
  <interface name="hps_spim0" internal="hps.spim0" />
  <interface name="hps_spim0_sclk_out" internal="hps.spim0_sclk_out" />
  <interface name="memory" internal="hps.memory" type="conduit" dir="end" />
+ <interface
+   name="pwm_avalon"
+   internal="PWM_avalon_interface_0.export"
+   type="conduit"
+   dir="end" />
  <interface name="reset" internal="fpga_clk.clk_in_reset" type="reset" dir="end" />
+ <module
+   name="PWM_avalon_interface_0"
+   kind="PWM_avalon_interface"
+   version="1.0"
+   enabled="1" />
  <module name="adc" kind="altera_up_avalon_adc" version="18.0" enabled="1">
   <parameter name="AUTO_CLK_CLOCK_RATE" value="12500000" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
@@ -1138,6 +1188,15 @@
  <connection
    kind="avalon"
    version="23.1"
+   start="hps.h2f_lw_axi_master"
+   end="PWM_avalon_interface_0.avalon_slave_0_1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0020" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="23.1"
    start="jtag_master.master"
    end="adc.adc_slave">
   <parameter name="arbitrationPriority" value="1" />
@@ -1149,6 +1208,11 @@
    version="23.1"
    start="fpga_clk.clk"
    end="jtag_master.clk" />
+ <connection
+   kind="clock"
+   version="23.1"
+   start="fpga_clk.clk"
+   end="PWM_avalon_interface_0.clock_sink" />
  <connection
    kind="clock"
    version="23.1"
@@ -1171,6 +1235,11 @@
    version="23.1"
    start="fpga_clk.clk_reset"
    end="adc_pll.reset" />
+ <connection
+   kind="reset"
+   version="23.1"
+   start="fpga_clk.clk_reset"
+   end="PWM_avalon_interface_0.reset_sink" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
 </system>
