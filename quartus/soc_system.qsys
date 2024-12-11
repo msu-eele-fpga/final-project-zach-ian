@@ -19,9 +19,30 @@
    }
    element PWM_avalon_interface_0.avalon_slave_0_1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "32";
+         type = "String";
+      }
+   }
+   element Shifter_avalon_interface_0
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element Shifter_avalon_interface_0.avalon_slave_0
+   {
+      datum baseAddress
+      {
+         value = "48";
          type = "String";
       }
    }
@@ -35,6 +56,11 @@
    }
    element adc.adc_slave
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "0";
@@ -410,9 +436,19 @@
    type="conduit"
    dir="end" />
  <interface name="reset" internal="fpga_clk.clk_in_reset" type="reset" dir="end" />
+ <interface
+   name="shifter_avalon"
+   internal="Shifter_avalon_interface_0.conduit_end"
+   type="conduit"
+   dir="end" />
  <module
    name="PWM_avalon_interface_0"
    kind="PWM_avalon_interface"
+   version="1.0"
+   enabled="1" />
+ <module
+   name="Shifter_avalon_interface_0"
+   kind="Shifter_avalon_interface"
    version="1.0"
    enabled="1" />
  <module name="adc" kind="altera_up_avalon_adc" version="18.0" enabled="1">
@@ -1189,6 +1225,15 @@
    kind="avalon"
    version="23.1"
    start="hps.h2f_lw_axi_master"
+   end="Shifter_avalon_interface_0.avalon_slave_0">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0030" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="23.1"
+   start="hps.h2f_lw_axi_master"
    end="PWM_avalon_interface_0.avalon_slave_0_1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0020" />
@@ -1208,6 +1253,11 @@
    version="23.1"
    start="fpga_clk.clk"
    end="jtag_master.clk" />
+ <connection
+   kind="clock"
+   version="23.1"
+   start="fpga_clk.clk"
+   end="Shifter_avalon_interface_0.clock" />
  <connection
    kind="clock"
    version="23.1"
@@ -1240,6 +1290,11 @@
    version="23.1"
    start="fpga_clk.clk_reset"
    end="PWM_avalon_interface_0.reset_sink" />
+ <connection
+   kind="reset"
+   version="23.1"
+   start="fpga_clk.clk_reset"
+   end="Shifter_avalon_interface_0.reset_sink" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
 </system>

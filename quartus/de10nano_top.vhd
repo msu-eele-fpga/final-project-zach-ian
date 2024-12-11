@@ -254,7 +254,10 @@ architecture de10nano_arch of de10nano_top is
       adc_din                         : out   std_logic;
       pwm_avalon_blue_pwm_signal      : out   std_logic;                                        -- blue_pwm_signal
       pwm_avalon_green_pwm_signal     : out   std_logic;                                        -- green_pwm_signal
-      pwm_avalon_red_pwm_signal       : out   std_logic
+      pwm_avalon_red_pwm_signal       : out   std_logic;
+      shifter_avalon_output	      : out   std_logic_vector(7 downto 0);
+      shifter_avalon_pb_right	      : in    std_logic;
+      shifter_avalon_pb_left	      : in    std_logic
     );
   end component soc_system;
 
@@ -354,12 +357,17 @@ begin
 
       -- Fabric clock and reset
       clk_clk       => fpga_clk1_50,
-      reset_reset_n => rst_n,
+      reset_reset_n => push_button_n(0),
       
       -- PWM LED control
       pwm_avalon_blue_pwm_signal => gpio_0(0),
       pwm_avalon_green_pwm_signal => gpio_0(1),
-      pwm_avalon_red_pwm_signal => gpio_0(2)
+      pwm_avalon_red_pwm_signal => gpio_0(2),
+      
+      -- Shifter control
+      std_ulogic_vector(shifter_avalon_output) => gpio_0(17 downto 10),
+      shifter_avalon_pb_left => gpio_0(33),
+      shifter_avalon_pb_right => gpio_0(35)
     );
 
 end architecture de10nano_arch;
