@@ -357,7 +357,7 @@ begin
 
       -- Fabric clock and reset
       clk_clk       => fpga_clk1_50,
-      reset_reset_n => rst_n,
+      reset_reset_n => gpio_0(35),
       
       -- PWM LED control
       pwm_avalon_blue_pwm_signal => gpio_0(0),
@@ -365,9 +365,9 @@ begin
       pwm_avalon_red_pwm_signal => gpio_0(2),
       
       -- Shifter control
-      std_ulogic_vector(shifter_avalon_output) => gpio_0(17 downto 10),
-      shifter_avalon_pb_left => gpio_0(35),
-      shifter_avalon_pb_right => gpio_0(33)
+      std_ulogic_vector(shifter_avalon_output) => led,
+      shifter_avalon_pb_left => push_button_n(0),
+      shifter_avalon_pb_right => push_button_n(1)
     );
 
 end architecture de10nano_arch;

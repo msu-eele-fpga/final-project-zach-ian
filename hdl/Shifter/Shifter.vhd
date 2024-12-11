@@ -30,6 +30,10 @@ architecture Shifter_arch of Shifter is
 	signal curpat	: unsigned(7 downto 0) := "01010101";
 	signal toggle	: std_logic := '0';
 	signal toggle2	: std_logic := '0';
+	signal L 	: std_logic := '0';
+	signal R 	: std_logic := '0';
+	signal L2 	: std_logic := '0';
+	signal R2 	: std_logic := '0';
 	
 	begin 		
 		PATCHANGER : process(Pattern)
@@ -37,15 +41,31 @@ architecture Shifter_arch of Shifter is
 				toggle <= not toggle;
 		end process;
 		
-		BEEP : process(clk, rst, PB_Right_pulse, PB_Left_pulse, toggle)
+		process(PB_Left)
+			begin
+				if(PB_Left = '1') then
+					L <= not L;
+				end if;
+		end process;
+		
+		process(PB_Right)
+			begin
+				if(PB_Right = '1') then
+					R <= not R;
+				end if;
+		end process;
+		
+		BEEP : process(clk, rst)
 			begin 
 				if(rst = '1') then
 					curpat <= "01010101";
 				elsif(rising_edge(clk)) then
-					if(PB_Right_pulse = '1') then
+					if(not R = R2) then
 						curpat <= curpat ror 1;
-					elsif(PB_Left_pulse = '1') then
+						R2 <= R;
+					elsif(not L = L2) then
 						curpat <= curpat rol 1;
+						L2 <= L;
 					elsif(not toggle = toggle2) then
 						curpat <= unsigned(Pattern);
 						toggle2 <= toggle;
