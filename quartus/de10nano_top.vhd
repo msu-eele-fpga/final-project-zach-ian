@@ -254,7 +254,8 @@ architecture de10nano_arch of de10nano_top is
       adc_din                         : out   std_logic;
       pwm_avalon_blue_pwm_signal      : out   std_logic;                                        -- blue_pwm_signal
       pwm_avalon_green_pwm_signal     : out   std_logic;                                        -- green_pwm_signal
-      pwm_avalon_red_pwm_signal       : out   std_logic
+      pwm_avalon_red_pwm_signal       : out   std_logic;
+      potent_array_led_value          : out   std_logic_vector(7 downto 0)
     );
   end component soc_system;
 
@@ -359,7 +360,8 @@ begin
       -- PWM LED control
       pwm_avalon_blue_pwm_signal => gpio_0(0),
       pwm_avalon_green_pwm_signal => gpio_0(1),
-      pwm_avalon_red_pwm_signal => gpio_0(2)
+      pwm_avalon_red_pwm_signal => gpio_0(2),
+      std_logic_vector(potent_array_led_value)    => led
     );
 
 end architecture de10nano_arch;

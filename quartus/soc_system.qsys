@@ -19,6 +19,11 @@
    }
    element PWM_avalon_interface_0.avalon_slave_0_1
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "32";
@@ -35,6 +40,11 @@
    }
    element adc.adc_slave
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
          value = "0";
@@ -76,6 +86,35 @@
       {
          value = "2";
          type = "int";
+      }
+   }
+   element potent_array_0
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element potent_array_0.avalon_slave_pot_0
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "48";
+         type = "String";
+      }
+   }
+   element soc_system
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone V";
+         type = "String";
       }
    }
    element soc_system
@@ -404,6 +443,11 @@
  <interface name="hps_spim0" internal="hps.spim0" />
  <interface name="hps_spim0_sclk_out" internal="hps.spim0_sclk_out" />
  <interface name="memory" internal="hps.memory" type="conduit" dir="end" />
+ <interface
+   name="potent_array"
+   internal="potent_array_0.conduit_end"
+   type="conduit"
+   dir="end" />
  <interface
    name="pwm_avalon"
    internal="PWM_avalon_interface_0.export"
@@ -1176,6 +1220,7 @@
   <parameter name="PLI_PORT" value="50000" />
   <parameter name="USE_PLI" value="0" />
  </module>
+ <module name="potent_array_0" kind="potent_array" version="1.0" enabled="1" />
  <connection
    kind="avalon"
    version="23.1"
@@ -1197,6 +1242,15 @@
  <connection
    kind="avalon"
    version="23.1"
+   start="hps.h2f_lw_axi_master"
+   end="potent_array_0.avalon_slave_pot_0">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0030" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="23.1"
    start="jtag_master.master"
    end="adc.adc_slave">
   <parameter name="arbitrationPriority" value="1" />
@@ -1213,6 +1267,11 @@
    version="23.1"
    start="fpga_clk.clk"
    end="PWM_avalon_interface_0.clock_sink" />
+ <connection
+   kind="clock"
+   version="23.1"
+   start="fpga_clk.clk"
+   end="potent_array_0.clock_sink" />
  <connection
    kind="clock"
    version="23.1"
@@ -1240,6 +1299,11 @@
    version="23.1"
    start="fpga_clk.clk_reset"
    end="PWM_avalon_interface_0.reset_sink" />
+ <connection
+   kind="reset"
+   version="23.1"
+   start="fpga_clk.clk_reset"
+   end="potent_array_0.reset_sink" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
 </system>
