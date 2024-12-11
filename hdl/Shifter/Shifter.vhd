@@ -24,53 +24,32 @@ architecture Shifter_arch of Shifter is
 		);
 	end component;
 	
-	
 	signal PB_Right_pulse : std_ulogic;
 	signal PB_Left_pulse : std_ulogic;
 	signal curpat	: unsigned(7 downto 0) := "01010101";
 	signal toggle	: std_logic := '0';
 	signal toggle2	: std_logic := '0';
-	signal L 	: std_logic := '0';
-	signal R 	: std_logic := '0';
-	signal L2 	: std_logic := '0';
-	signal R2 	: std_logic := '0';
 	
 	begin 		
-		PATCHANGER : process(Pattern)
+		process(clk,rst)
 			begin 
-				toggle <= not toggle;
+			if(rst = '1') then
+				curpat <= unsigned(Pattern);
+			elsif(rising_edge(clk)) then
+				if(PB_Right_pulse = '1') then
+					curpat <= rotate_right(curpat, 1);
+				elsif(PB_Left_pulse = '1') then
+					curpat <= rotate_left(curpat, 1);
+				elsif(toggle = toggle2) then
+					curpat <= unsigned(Pattern);
+					toggle2 <= not toggle;
+				end if;
+			end if;
 		end process;
 		
-		process(PB_Left)
+		process(Pattern)
 			begin
-				if(PB_Left = '1') then
-					L <= not L;
-				end if;
-		end process;
-		
-		process(PB_Right)
-			begin
-				if(PB_Right = '1') then
-					R <= not R;
-				end if;
-		end process;
-		
-		BEEP : process(clk, rst)
-			begin 
-				if(rst = '1') then
-					curpat <= "01010101";
-				elsif(rising_edge(clk)) then
-					if(not R = R2) then
-						curpat <= curpat ror 1;
-						R2 <= R;
-					elsif(not L = L2) then
-						curpat <= curpat rol 1;
-						L2 <= L;
-					elsif(not toggle = toggle2) then
-						curpat <= unsigned(Pattern);
-						toggle2 <= toggle;
-					end if;
-				end if;
+			toggle <= not toggle;
 		end process;
 		
 		output <= std_ulogic_vector(curpat);
