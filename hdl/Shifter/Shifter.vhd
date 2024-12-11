@@ -7,6 +7,7 @@ entity Shifter is
 		clk		: in std_logic;
 		rst		: in std_logic;
 		Pattern		: in std_logic_vector(7 downto 0);
+		write_flag	: in std_logic;
 		PB_Right	: in std_ulogic;
 		PB_Left		: in std_ulogic;
 		output		: out std_ulogic_vector(7 downto 0)
@@ -28,7 +29,7 @@ architecture Shifter_arch of Shifter is
 	signal PB_Left_pulse : std_ulogic;
 	signal curpat	: unsigned(7 downto 0) := "01010101";
 	signal toggle	: std_logic := '0';
-	signal toggle2	: std_logic := '0';
+	signal toggle2	: std_logic := '1';
 	
 	begin 		
 		process(clk,rst)
@@ -40,17 +41,17 @@ architecture Shifter_arch of Shifter is
 					curpat <= rotate_right(curpat, 1);
 				elsif(PB_Left_pulse = '1') then
 					curpat <= rotate_left(curpat, 1);
-				elsif(toggle = toggle2) then
+				elsif(write_flag = '1') then
 					curpat <= unsigned(Pattern);
-					toggle2 <= not toggle;
+					--toggle2 <= not toggle;
 				end if;
 			end if;
 		end process;
 		
-		process(Pattern)
-			begin
-			toggle <= not toggle;
-		end process;
+		--process(Pattern)
+		--	begin
+		--	toggle <= not toggle;
+		--end process;
 		
 		output <= std_ulogic_vector(curpat);
 		

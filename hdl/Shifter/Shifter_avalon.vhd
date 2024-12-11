@@ -23,7 +23,7 @@ end entity;
 
 architecture Shifter_avalon_arch of Shifter_avalon is
 	
-	signal Pattern 	: std_logic_vector(7 downto 0) := "01010101";
+	signal Pattern 	: std_logic_vector(7 downto 0) := "00000001";
 	
 	
 	component Shifter is
@@ -31,6 +31,7 @@ architecture Shifter_avalon_arch of Shifter_avalon is
 			clk		: in std_logic;
 			rst		: in std_logic;
 			Pattern		: in std_ulogic_vector(7 downto 0);
+			write_flag	: in std_logic;
 			PB_Right	: in std_ulogic;
 			PB_Left		: in std_ulogic;
 			output		: out std_ulogic_vector(7 downto 0)
@@ -52,7 +53,7 @@ architecture Shifter_avalon_arch of Shifter_avalon is
 	avalon_register_write : process(clk, rst) is
 		begin
 			if(rst = '1') then
-				Pattern	<= "01010101";
+				Pattern	<= "00000001";
 			elsif (rising_edge(clk) and avs_write = '1') then
 				case avs_address is
 					when "00"	=> Pattern <= avs_writedata(7 downto 0);
@@ -65,6 +66,7 @@ architecture Shifter_avalon_arch of Shifter_avalon is
 		clk => clk,
 		rst => rst,
 		Pattern => std_ulogic_vector(Pattern),
+		write_flag => avs_write,
 		PB_Right => PB_Right,
 		PB_Left => PB_Left,
 		output => output	
