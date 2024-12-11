@@ -257,7 +257,8 @@ architecture de10nano_arch of de10nano_top is
       pwm_avalon_red_pwm_signal       : out   std_logic;
       shifter_avalon_output	      : out   std_logic_vector(7 downto 0);
       shifter_avalon_pb_right	      : in    std_logic;
-      shifter_avalon_pb_left	      : in    std_logic
+      shifter_avalon_pb_left	      : in    std_logic;
+      potent_array_led_value	      : out   std_logic_vector(7 downto 0)
     );
   end component soc_system;
 
@@ -367,7 +368,10 @@ begin
       -- Shifter control
       std_ulogic_vector(shifter_avalon_output) => gpio_0(17 downto 10),
       shifter_avalon_pb_left => gpio_0(33),
-      shifter_avalon_pb_right => gpio_0(35)
+      shifter_avalon_pb_right => gpio_0(35),
+      
+      -- potent_array 
+      std_logic_vector(potent_array_led_value) => led
     );
 
 end architecture de10nano_arch;
