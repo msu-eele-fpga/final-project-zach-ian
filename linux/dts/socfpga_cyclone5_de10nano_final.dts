@@ -7,7 +7,7 @@
 	};
 	rgbled: rgbled@ff200020 {
 		compatible = "Ian,rgbled";
-		reg = <0xff200020 32>;
+		reg = <0xff200020 16>;
 	};
 	shifter: shifter@ff200030 {
 		compatible = "Ian,shifter";

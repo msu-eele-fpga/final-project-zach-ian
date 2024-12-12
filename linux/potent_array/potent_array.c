@@ -8,8 +8,8 @@
 #include <linux/kstrtox.h>
 #include <linux/uaccess.h>
 
-#define POTENT_OFFSET 0x0
-#define STEP_OFFSET 0x4
+#define POTENT_OFFSET 0x4
+#define STEP_OFFSET 0x0
 #define SPAN 16
 
 /**
