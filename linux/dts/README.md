@@ -1,10 +1,26 @@
 # Device tree
 
-This folder should contain your device tree source file.
+device tree source file.
 
 
-## Instructions
-
-1. Create a new dts file called `socfpga_cyclone5_de10nano_final_project.dts` (or something similar, if you can come up with a better name than "final project").
-2. Symlink this file into `linux-socfpga/arch/arm/boot/dts/intel/socfpga/` as you did with your `socfpga_cyclone5_de10nano_led_patterns.dts` file.
-3. Add your new dtb file name to the Makefile in `linux-socfpga/arch/arm/boot/dts/intel/socfgpa/`.
+## Overview
+Main body of the file:
+```
+de10nano_adc: adc@ff200000 {
+		compatible = "adsd,de10nano_adc";
+		reg = <0xff200000 32>;
+	};
+	rgbled: rgbled@ff200020 {
+		compatible = "Ian,rgbled";
+		reg = <0xff200020 16>;
+	};
+	shifter: shifter@ff200030 {
+		compatible = "Ian,shifter";
+		reg = <0xff200030 16>;
+	};
+	potent_array: potent_array@ff200040 {
+		compatible = "Zach,potent_array";
+		reg = <0xff200040 16>;
+	};
+```
+This tells the linux device tree that the adc component is at base address `0xff200000`, rgbled is at `0xff200020`, shifter is at `0x200030`, and potent array is at `0xff200040`.
