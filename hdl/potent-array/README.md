@@ -5,3 +5,7 @@ To build the "potent_array.vhd" file you will need to create a .vhd file within 
 
 ## Memory Map 
 
+| Offset | Name         | R/W | Purpose                    |
+|--------|--------------|-----|----------------------------|
+| 0x0    | step_size    | W   | Chose size of pot. step    |
+| 0x1    | potent_value | R   | Reads in potentiometer vals|
