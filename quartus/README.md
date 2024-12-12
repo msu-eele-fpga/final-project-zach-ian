@@ -1,7 +1,7 @@
 # Quartus Directory Overview
 
 ## Purpose
-The quartus directory includes the top file for the VHDL project wich has important aspects including the `de10nano_top.vhd` used for full system instantiation, our `soc_system.rbf` which is used in our kernel for component identification, relevant `.tcl` files that describes components on the hps bus, and finally out `.qip` file which contains our IP cores.
+The quartus directory includes the top file for the VHDL project which has important aspects including the `de10nano_top.vhd` used for full system instantiation, our `soc_system.rbf` which is used in our kernel for component identification, relevant `.tcl` files that describes components on the hps bus, and finally our `.qip` file which contains our IP cores.
 
 ## de10nano.vhd
 Our de10nano file required these minor changes to properly instantiate components.
