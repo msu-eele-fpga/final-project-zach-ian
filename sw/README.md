@@ -1,3 +1,2 @@
 # Software source code
-
-Software source code will go here. Use subfolders to organize the software how you like.
+This folder has the software code that will complete the functionality for each hardware software component pair.
