@@ -15,4 +15,13 @@ This project uses hardware and software in tandem to implement various functiona
 		1. Sending the potentiometer position
 		2. Chooses what pattern is displayed
 	* One potentiometer.
+## Directories
+| Dir name | Description | 
+| -------- | ----------- | 
+| docs     | Proposal file and submission guidelines |
+| hdl      | Where the VHDL code files go for each of the three components |
+| linux    | Where device drivers for each component go and where the modifications to the linux device tree are shown |
+| quartus  | Where the quartus project files lie to compile the hardware devices into one design (Noteworthy files: [top file](quartus/de10nano_top.vhd), Tickle (tcl) files) |
+| sw       | Where C files go for executing user-space code that connects our hardware components and drives them with values. |
+| utils    | Something (helpful files for our reference)
 ## 
