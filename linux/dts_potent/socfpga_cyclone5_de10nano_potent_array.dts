@@ -1,9 +1,0 @@
-#include "socfpga_cyclone5_de10nano.dtsi"
-
-/{
-	potent_array: potent_array@ff200040 {
-		compatible = "Guentherman,potent-array";
-		reg = <0xff200040 16>;
-	};
-
-};
